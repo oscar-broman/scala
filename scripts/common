@@ -178,16 +178,18 @@ triggerScalaDist() {
   local jsonTemplate='{ "request": { "branch": "%s", "message": "Scala Dist %s", "config": { "before_install": "export version=%s mode=release scala_sha=%s" } } }'
   local json=$(printf "$jsonTemplate" "$TRAVIS_BRANCH" "$SCALA_VER" "$SCALA_VER" "$TRAVIS_COMMIT")
 
-  local curlStatus=$(curl \
-    -s -o /dev/null -w "%{http_code}" \
+  local HTTP_RESPONSE=$(curl \
+    -s -w "HTTPSTATUS:%{http_code}" \
     -H "Travis-API-Version: 3" \
     -H "Authorization: token $TRAVIS_TOKEN" \
     -H "Content-Type: application/json" \
     -d "$json" \
     https://api.travis-ci.org/repo/github/scala%2Fscala-dist/requests)
 
-  if [[ "$curlStatus" != "202" ]]; then
-    echo "failed to start job, curl status: $curlStatus"
+  local HTTP_STATUS=$(echo "$HTTP_RESPONSE" | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
+
+  if [[ "$HTTP_STATUS" != "202" ]]; then
+    echo "failed to start job:\n$HTTP_RESPONSE"
     exit 1
   fi
 }
