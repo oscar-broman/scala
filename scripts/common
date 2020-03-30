@@ -189,7 +189,7 @@ triggerScalaDist() {
   local HTTP_STATUS=$(echo "$HTTP_RESPONSE" | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
 
   if [[ "$HTTP_STATUS" != "202" ]]; then
-    echo "failed to start job:\n$HTTP_RESPONSE"
+    echo -e "failed to start job:\n$HTTP_RESPONSE"
     exit 1
   fi
 }
