@@ -184,10 +184,10 @@ triggerScalaDist() {
     -H "Authorization: token $TRAVIS_TOKEN" \
     -H "Content-Type: application/json" \
     -d "$json" \
-    https://api.travis-ci.org/repo/scala%2Fscala-dist/requests)
+    https://api.travis-ci.org/repo/github/scala%2Fscala-dist/requests)
 
-  [[ "$curlStatus" == "202" ]] || {
-    echo "failed to start job"
+  if [[ "$curlStatus" != "202" ]]; then
+    echo "failed to start job, curl status: $curlStatus"
     exit 1
-  }
+  fi
 }

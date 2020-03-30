@@ -23,13 +23,13 @@ jobs:
           - (cd admin && ./init.sh)
           - source scripts/common
           - source scripts/bootstrap_fun
-          - determineScalaVersion
-          - removeExistingBuilds $integrationRepoUrl
-          - if [ ! -z "$STARR_REF" ]; then buildStarr; fi
-          - buildLocker
-          - buildQuick
+          # - determineScalaVersion
+          # - removeExistingBuilds $integrationRepoUrl
+          # - if [ ! -z "$STARR_REF" ]; then buildStarr; fi
+          # - buildLocker
+          # - buildQuick
           - triggerScalaDist
-          - sbt -Dscala.build.compileWithDotty=true library/compile
+          # - sbt -Dscala.build.compileWithDotty=true library/compile
 
       # pull request validation (w/ mini-bootstrap)
       # "mini" in these senses:
