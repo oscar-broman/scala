@@ -190,6 +190,7 @@ triggerScalaDist() {
 
   if [[ "$HTTP_STATUS" != "202" ]]; then
     echo -e "failed to start job:\n$HTTP_RESPONSE"
+    sleep 1
     exit 1
   fi
 }
